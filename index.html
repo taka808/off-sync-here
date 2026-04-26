@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Off Sync, Here — Takahiro Izumikawa Japan Tour 2026</title>
+<meta name="description" content="アルバム &quot;Off Sync&quot; に記録された音楽の会話は今も続いている。2026年6月、大阪・札幌・東京の3公演。">
+
+<!-- 検索エンジンに出さない（プレースホルダ段階・URL知ってる人だけアクセス可） -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- OGP -->
+<meta property="og:title" content="Off Sync, Here — Takahiro Izumikawa Japan Tour 2026">
+<meta property="og:description" content="アルバム &quot;Off Sync&quot; に記録された音楽の会話は今も続いている。会場限定100枚のOff Syncレコードが完成しました。">
+<meta property="og:type" content="website">
+<!-- TODO[v2]: og:image にフライヤー画像（Alaya Phase 3完成後）を差し込む -->
+<!-- <meta property="og:image" content="_assets/og.jpg"> -->
+
+<!-- Google Fonts: Cormorant Garamond + Shippori Mincho -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- TODO[v1]: GA4 トラッキングID差し込み（G-XXXXXXXXXX を実IDに置換してアンコメント） -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+
+<style>
+:root {
+  --bg: #161616;
+  --bg-deeper: #0e0e0e;
+  --text: #f5f0e8;
+  --text-dim: rgba(245, 240, 232, 0.55);
+  --text-faint: rgba(245, 240, 232, 0.32);
+  --accent: #c6a559;
+  --rule: rgba(245, 240, 232, 0.14);
+  --rule-faint: rgba(245, 240, 232, 0.07);
+  --grain-opacity: 0.08;
+
+  --font-en: 'Cormorant Garamond', 'Shippori Mincho', serif;
+  --font-jp: 'Shippori Mincho', 'Yu Mincho', YuMincho, '游明朝', serif;
+
+  --max-width: 1080px;
+  --gutter: clamp(24px, 5vw, 64px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-jp);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.85;
+  letter-spacing: 0.04em;
+  font-size: 15px;
+  font-feature-settings: "palt";
+}
+
+/* ===== グレイン: SVG noise overlay ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.94 0 0 0 0 0.91 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+
+/* ===== Page-load staggered reveal ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fade-up 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.r-1  { animation-delay: 0.10s; }
+.r-2  { animation-delay: 0.22s; }
+.r-3  { animation-delay: 0.36s; }
+.r-4  { animation-delay: 0.52s; }
+.r-5  { animation-delay: 0.72s; }
+.r-6  { animation-delay: 0.96s; }
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ===== Section base ===== */
+section {
+  position: relative;
+  z-index: 2;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: clamp(40px, 8vh, 80px);
+  padding-bottom: clamp(40px, 8vh, 80px);
+}
+.hero-top {
+  margin-top: clamp(40px, 14vh, 120px);
+}
+.hero-meta {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 40px;
+}
+.hero-title {
+  font-family: var(--font-en);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(60px, 12vw, 168px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 28px;
+}
+.hero-title .comma {
+  font-style: normal;
+  color: var(--accent);
+  margin: 0 0.04em;
+}
+.hero-subtitle {
+  font-family: var(--font-en);
+  font-size: clamp(12px, 1.3vw, 14px);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.hero-bottom {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: clamp(60px, 12vh, 120px);
+}
+.hero-statement {
+  max-width: 380px;
+  font-family: var(--font-jp);
+  font-size: 14px;
+  line-height: 2;
+  color: var(--text-dim);
+}
+
+/* ===== ENTRIES (3-tier structure) ===== */
+.entries {
+  padding-top: clamp(120px, 22vh, 220px);
+  padding-bottom: clamp(80px, 14vh, 140px);
+}
+.entry {
+  padding: clamp(64px, 14vh, 120px) 0;
+}
+
+.entry-eyebrow {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.40em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 28px;
+}
+/* Title: 英字主役 + 日本語動詞は説明的に控えめ */
+.entry-title {
+  font-family: var(--font-jp);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(15px, 1.8vw, 20px);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+  color: var(--text);
+}
+.entry-title .en {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 3.8em;
+  letter-spacing: -0.005em;
+  margin-right: 0.14em;
+  color: var(--text);
+  vertical-align: -0.08em;
+}
+.entry-title .accent {
+  color: var(--accent);
+}
+.entry-jp {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  margin-bottom: 36px;
+}
+.entry-body {
+  font-family: var(--font-jp);
+  font-size: 15px;
+  line-height: 2;
+  color: var(--text);
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+
+/* Log form */
+.log-form {
+  max-width: 520px;
+  margin-top: 8px;
+}
+.log-form-inner {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0;
+}
+.log-form input[type="email"] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font-en);
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  padding: 18px 0;
+  outline: none;
+  min-width: 0;
+}
+.log-form input::placeholder {
+  color: var(--text-faint);
+  font-style: normal;
+  font-family: var(--font-jp);
+  letter-spacing: 0.08em;
+}
+.log-form input:focus { color: var(--accent); }
+.log-form button {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: var(--font-jp);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  padding: 18px 0 18px 28px;
+  cursor: pointer;
+  transition: color 0.4s ease;
+  white-space: nowrap;
+}
+.log-form button:hover { color: var(--accent); }
+.log-form-note {
+  font-family: var(--font-jp);
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 20px;
+  letter-spacing: 0.08em;
+}
+
+/* Tickets grid */
+.tickets-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 16px;
+}
+.ticket-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+  padding: 36px 0;
+}
+.ticket-row:first-child { padding-top: 8px; }
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ticket-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.ticket-meta .city {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.ticket-meta .date {
+  font-family: var(--font-jp);
+  font-style: normal;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+.venue-name {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 34px);
+  letter-spacing: 0.005em;
+  color: var(--text);
+  margin: 2px 0 6px;
+  line-height: 1.15;
+}
+.ticket-row .ease {
+  font-family: var(--font-jp);
+  font-size: 13px;
+  line-height: 1.95;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  max-width: 460px;
+}
+.ticket-link {
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.40em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 6px;
+  transition: color 0.4s ease, border-color 0.4s ease;
+  white-space: nowrap;
+}
+.ticket-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Crew Ticket — accent placement (only on "Crew Ticket" span, not the entire title) */
+.crew-cta {
+  display: inline-block;
+  font-family: var(--font-en);
+  font-size: 12px;
+  letter-spacing: 0.40em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  padding: 20px 36px;
+  margin-top: 12px;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+.crew-cta:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  position: relative;
+  z-index: 2;
+  padding: clamp(80px, 14vh, 140px) var(--gutter) clamp(40px, 8vh, 80px);
+  border-top: 1px solid var(--rule);
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+.footer-name {
+  font-family: var(--font-en);
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.footer-org {
+  font-family: var(--font-en);
+  font-size: 10px;
+  letter-spacing: 0.40em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+.footer-meta {
+  font-family: var(--font-en);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--text-faint);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  body { font-size: 14px; }
+
+  .ticket-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 36px 0;
+    align-items: flex-start;
+  }
+  .ticket-link { justify-self: start; }
+
+  .hero-bottom { justify-content: flex-start; }
+  .hero-statement { max-width: 100%; }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .log-form button {
+    padding-left: 16px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container hero-top">
+    <p class="hero-meta reveal r-1">Takahiro Izumikawa &middot; Japan Tour 2026</p>
+    <h1 class="hero-title reveal r-2">Off&nbsp;Sync<span class="comma">,</span>&nbsp;Here</h1>
+    <p class="hero-subtitle reveal r-3">June 8 · Osaka &nbsp;&nbsp; June 12 · Sapporo &nbsp;&nbsp; June 15 · Tokyo</p>
+  </div>
+  <div class="container hero-bottom">
+    <p class="hero-statement reveal r-4">
+      アルバム &ldquo;Off Sync&rdquo; に記録された音楽の会話は今も続いている。<br>
+      会場限定100枚のOff Syncレコードが完成しました。
+    </p>
+  </div>
+</section>
+
+<!-- ===== 3-TIER ENTRIES ===== -->
+<section class="entries">
+  <div class="container">
+
+    <!-- i. The Log -->
+    <article class="entry log">
+      <h2 class="entry-title reveal r-2"><span class="en">Log</span>を受け取る</h2>
+      <p class="entry-body reveal r-3">
+        ツアー当日までの記録を、無料の便りでお届けします。Log #001、#002、#003 — 三通の連続した便りで、会場の空気と当日へ向かう時間を共有します。
+      </p>
+
+      <!-- TODO[v1]: Kit埋め込みフォームに差し替え。
+           - action= に Kit のフォームURL
+           - input name= 属性をKitの仕様（多くは email_address）に合わせる
+           - method= は Kit の仕様に従う -->
+      <form class="log-form reveal r-4" action="#" method="post">
+        <div class="log-form-inner">
+          <input type="email" name="email_address" placeholder="メールアドレス" required aria-label="メールアドレス">
+          <button type="submit">受け取る</button>
+        </div>
+        <p class="log-form-note">いつでも退会できます。各便りの末尾に退会リンクが付いています。</p>
+      </form>
+    </article>
+
+    <!-- ii. The Tickets -->
+    <article class="entry tickets">
+      <h2 class="entry-title reveal r-2"><span class="en">Tickets</span>を取る</h2>
+
+      <div class="tickets-grid reveal r-3">
+        <div class="ticket-row">
+          <div class="ticket-info">
+            <div class="ticket-meta">
+              <span class="city">Osaka</span>
+              <span class="date">6月8日（月）　ピアノソロ</span>
+            </div>
+            <div class="venue-name">Blue Yard</div>
+            <div class="ease">小さな部屋で、ピアノと同じ空気を吸います。</div>
+          </div>
+          <!-- TODO[v1]: BLUE YARD 予約URLに差し替え -->
+          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+        </div>
+        <div class="ticket-row">
+          <div class="ticket-info">
+            <div class="ticket-meta">
+              <span class="city">Sapporo</span>
+              <span class="date">6月12日（金）　ピアノソロ</span>
+            </div>
+            <div class="venue-name">&ldquo;D-Bop&rdquo; Jazz Club</div>
+            <div class="ease">ジャズクラブ。知識不要。ピアニストと同じ空間にいるだけでいい。</div>
+          </div>
+          <!-- TODO[v1]: D-Bop 予約URLに差し替え -->
+          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+        </div>
+        <div class="ticket-row">
+          <div class="ticket-info">
+            <div class="ticket-meta">
+              <span class="city">Tokyo</span>
+              <span class="date">6月15日（月）　フルバンド</span>
+            </div>
+            <div class="venue-name">Cotton Club</div>
+            <div class="ease">正装不要。道場に普段着で来る感覚で。</div>
+          </div>
+          <!-- TODO[v1]: COTTON CLUB 予約URLに差し替え -->
+          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- iii. The Crew -->
+    <article class="entry crew">
+      <h2 class="entry-title reveal r-2"><span class="en accent">Crew</span>に加わる</h2>
+      <p class="entry-jp reveal r-3">クルーとして、制作の内側から目撃する。</p>
+      <p class="entry-body reveal r-3">
+        Off Syncが記録された場所から、今このツアーが立ち上がるまで — クルーにだけ届くドキュメンタリー、当日の特別アクセス、そして会場限定レコード。
+      </p>
+      <!-- TODO[v1]: Live Pocket Crew Ticket URLに差し替え -->
+      <a class="crew-cta reveal r-4" href="#" target="_blank" rel="noopener">Join the Crew</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name">Takahiro Izumikawa</div>
+      <div class="footer-org">Access Art Works</div>
+    </div>
+    <div class="footer-meta">© 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
