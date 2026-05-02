@@ -135,18 +135,27 @@ section {
   justify-content: space-between;
   padding-top: clamp(40px, 8vh, 80px);
   padding-bottom: clamp(40px, 8vh, 80px);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background-image: url("_assets/hero-bg-desktop.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  opacity: 0.32;
+  pointer-events: none;
 }
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(22,22,22,0.78) 0%, rgba(22,22,22,0.88) 60%, rgba(22,22,22,0.96) 100%);
-  pointer-events: none;
   z-index: 0;
+  background: linear-gradient(180deg, rgba(22,22,22,0.30) 0%, rgba(22,22,22,0.60) 60%, rgba(22,22,22,0.92) 100%);
+  pointer-events: none;
 }
 .hero > * { position: relative; z-index: 2; }
 .hero-top {
@@ -160,50 +169,19 @@ section {
   color: var(--text-faint);
   margin-bottom: 40px;
 }
-/* Title block: Off / Sync (offset 2-line) + Here + huge gold comma */
+/* Title: Alaya 02Design 'for colored.png' を画像として配置（letter単位の白/シルバーグラデーションを保存） */
 .hero-title {
-  font-family: var(--font-en);
-  color: var(--text);
-  margin-bottom: 28px;
+  margin: 0 0 28px;
   display: block;
-  line-height: 0.94;
-  letter-spacing: -0.02em;
+  line-height: 0;
 }
-.title-off,
-.title-sync {
+.hero-title img {
   display: block;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(56px, 11vw, 152px);
-}
-.title-sync {
-  margin-left: 0.55em;
-  margin-top: -0.04em;
-}
-.title-here-line {
-  display: block;
-  font-style: normal;
-  font-size: clamp(28px, 4.6vw, 60px);
-  letter-spacing: 0;
-  margin-top: 0.22em;
-  text-align: right;
-  line-height: 1;
-}
-.title-here {
-  font-family: var(--font-en);
-  font-style: italic;
-  font-weight: 400;
-}
-.title-comma {
-  font-family: var(--font-en);
-  font-style: italic;
-  font-weight: 500;
-  color: var(--accent);
-  font-size: 2.6em;
-  margin-left: 0.06em;
-  display: inline-block;
-  vertical-align: -0.5em;
-  line-height: 0.5;
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 .hero-subtitle {
   font-family: var(--font-en);
@@ -212,9 +190,15 @@ section {
   text-transform: uppercase;
   color: var(--text-dim);
   font-weight: 400;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: inline-grid;
+  grid-template-columns: max-content max-content max-content;
+  column-gap: 0.8em;
+  row-gap: 8px;
+  align-items: baseline;
+}
+.hero-subtitle .d {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 .hero-bottom {
   display: flex;
@@ -500,10 +484,9 @@ footer {
 @media (max-width: 768px) {
   body { font-size: 14px; }
 
-  .hero {
+  .hero::before {
     background-image: url("_assets/hero-bg-mobile.jpg");
   }
-  .title-sync { margin-left: 0.4em; }
 
   .ticket-row {
     grid-template-columns: 1fr;
@@ -536,17 +519,16 @@ footer {
   <div class="container hero-top">
     <p class="hero-meta reveal r-1">Takahiro Izumikawa &middot; Japan Tour 2026</p>
     <h1 class="hero-title reveal r-2">
-      <span class="title-off">Off</span>
-      <span class="title-sync">Sync</span>
-      <span class="title-here-line">
-        <span class="title-here">Here</span><span class="title-comma">,</span>
-      </span>
+      <picture>
+        <source type="image/webp" srcset="_assets/title.webp">
+        <img src="_assets/title.png" alt="Off Sync, Here">
+      </picture>
     </h1>
-    <p class="hero-subtitle reveal r-3">
-      <span>June 8 &middot; Osaka</span>
-      <span>June 12 &middot; Sapporo</span>
-      <span>June 15 &middot; Tokyo</span>
-    </p>
+    <div class="hero-subtitle reveal r-3" aria-label="Tour dates">
+      <span class="m">June</span><span class="d">8</span><span class="c">&middot; Osaka</span>
+      <span class="m">June</span><span class="d">12</span><span class="c">&middot; Sapporo</span>
+      <span class="m">June</span><span class="d">15</span><span class="c">&middot; Tokyo</span>
+    </div>
   </div>
   <div class="container hero-bottom">
     <p class="hero-statement reveal r-4">
