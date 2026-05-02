@@ -129,8 +129,8 @@ section {
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 640px;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   overflow: hidden;
 }
@@ -156,16 +156,12 @@ section {
 }
 .hero > * { position: relative; z-index: 2; }
 
-/* Title: Alaya 02Design 'for colored.png' を全画面オーバーレイ。
-   absolute配置で flex制約を受けず、letter単位の白/シルバーグラデーションをそのまま大きく見せる */
+/* Title: Alaya 02Design 'for colored.png' をフル幅で配置（sequential flow） */
 .hero-title {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 2;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   line-height: 0;
 }
 .hero-title img {
@@ -177,15 +173,11 @@ section {
   -webkit-user-drag: none;
 }
 
-/* Foot: メタ+subtitle を HERO 縦中央寄り上（Sync下端と Here上端の間）に重ねる */
+/* Foot: メタ+subtitle を画像の下に配置 */
 .hero-foot {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 55%;
+  position: relative;
   z-index: 3;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
+  padding: clamp(20px, 3vh, 32px) var(--gutter) clamp(40px, 6vh, 64px);
   display: flex;
   align-items: flex-start;
 }
@@ -222,8 +214,8 @@ section {
   font-variant-numeric: tabular-nums;
 }
 .statement-block {
-  padding-top: clamp(60px, 10vh, 120px);
-  padding-bottom: clamp(60px, 10vh, 120px);
+  padding-top: clamp(48px, 8vh, 96px);
+  padding-bottom: clamp(24px, 4vh, 48px);
 }
 .hero-statement {
   max-width: 540px;
@@ -237,11 +229,14 @@ section {
 
 /* ===== ENTRIES (3-tier structure) ===== */
 .entries {
-  padding-top: clamp(120px, 22vh, 220px);
+  padding-top: clamp(24px, 4vh, 48px);
   padding-bottom: clamp(80px, 14vh, 140px);
 }
 .entry {
   padding: clamp(64px, 14vh, 120px) 0;
+}
+.entry:first-child {
+  padding-top: clamp(24px, 4vh, 48px);
 }
 
 .entry-eyebrow {
@@ -507,14 +502,6 @@ footer {
 
   .hero::before {
     background-image: url("_assets/hero-bg-mobile.jpg");
-  }
-  /* Mobile: title 上寄せ + foot は title 下に配置 */
-  .hero-title {
-    align-items: flex-start;
-    padding-top: clamp(40px, 8vh, 80px);
-  }
-  .hero-foot {
-    top: 42%;
   }
 
   .ticket-row {
