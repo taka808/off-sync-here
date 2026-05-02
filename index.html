@@ -129,12 +129,9 @@ section {
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: clamp(40px, 8vh, 80px);
-  padding-bottom: clamp(40px, 8vh, 80px);
+  height: 100vh;
+  min-height: 640px;
+  padding: 0;
   overflow: hidden;
 }
 .hero::before {
@@ -158,8 +155,45 @@ section {
   pointer-events: none;
 }
 .hero > * { position: relative; z-index: 2; }
-.hero-top {
-  margin-top: clamp(8px, 2vh, 20px);
+
+/* Title: Alaya 02Design 'for colored.png' を全画面オーバーレイ。
+   absolute配置で flex制約を受けず、letter単位の白/シルバーグラデーションをそのまま大きく見せる */
+.hero-title {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+.hero-title img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Foot: メタ+subtitle のみ左下に重ねる（statement は HERO 外に分離）*/
+.hero-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(32px, 6vh, 64px);
+  z-index: 3;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  display: flex;
+  align-items: flex-end;
+}
+.hero-foot-left {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
 }
 .hero-meta {
   font-family: var(--font-en);
@@ -167,21 +201,7 @@ section {
   letter-spacing: 0.36em;
   text-transform: uppercase;
   color: var(--text-faint);
-  margin-bottom: 40px;
-}
-/* Title: Alaya 02Design 'for colored.png' を画像として配置（letter単位の白/シルバーグラデーションを保存） */
-.hero-title {
-  margin: 0 0 28px;
-  display: block;
-  line-height: 0;
-}
-.hero-title img {
-  display: block;
-  width: 100%;
-  max-width: 880px;
-  height: auto;
-  user-select: none;
-  -webkit-user-drag: none;
+  margin: 0;
 }
 .hero-subtitle {
   font-family: var(--font-en);
@@ -195,22 +215,24 @@ section {
   column-gap: 0.8em;
   row-gap: 8px;
   align-items: baseline;
+  margin: 0;
 }
 .hero-subtitle .d {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-.hero-bottom {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: clamp(60px, 12vh, 120px);
+.statement-block {
+  padding-top: clamp(60px, 10vh, 120px);
+  padding-bottom: clamp(60px, 10vh, 120px);
 }
 .hero-statement {
-  max-width: 380px;
+  max-width: 540px;
+  margin: 0 0 0 auto;
   font-family: var(--font-jp);
   font-size: 14px;
   line-height: 2;
   color: var(--text-dim);
+  text-align: left;
 }
 
 /* ===== ENTRIES (3-tier structure) ===== */
@@ -466,11 +488,10 @@ footer {
   /* Hero: 100vh → 標準ビューポート900px固定 */
   .hero {
     min-height: 900px;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 40px;
+    padding-bottom: 64px;
   }
-  .hero-top { margin-top: 100px; }
-  .hero-bottom { margin-top: 120px; }
+  .hero-foot { margin-top: 32px; }
 
   /* Sections: vh含むclamp値の代わりに固定px */
   .entries { padding-top: 200px; padding-bottom: 140px; }
@@ -496,7 +517,11 @@ footer {
   }
   .ticket-link { justify-self: start; }
 
-  .hero-bottom { justify-content: flex-start; }
+  .hero-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
   .hero-statement { max-width: 100%; }
 
   .footer-inner {
@@ -516,21 +541,27 @@ footer {
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="container hero-top">
-    <p class="hero-meta reveal r-1">Takahiro Izumikawa &middot; Japan Tour 2026</p>
-    <h1 class="hero-title reveal r-2">
-      <picture>
-        <source type="image/webp" srcset="_assets/title.webp">
-        <img src="_assets/title.png" alt="Off Sync, Here">
-      </picture>
-    </h1>
-    <div class="hero-subtitle reveal r-3" aria-label="Tour dates">
-      <span class="m">June</span><span class="d">8</span><span class="c">&middot; Osaka</span>
-      <span class="m">June</span><span class="d">12</span><span class="c">&middot; Sapporo</span>
-      <span class="m">June</span><span class="d">15</span><span class="c">&middot; Tokyo</span>
+  <h1 class="hero-title reveal r-2">
+    <picture>
+      <source type="image/webp" srcset="_assets/title.webp">
+      <img src="_assets/title.png" alt="Off Sync, Here">
+    </picture>
+  </h1>
+  <div class="hero-foot">
+    <div class="hero-foot-left">
+      <p class="hero-meta reveal r-1">Takahiro Izumikawa &#9642; Japan Tour 2026</p>
+      <div class="hero-subtitle reveal r-3" aria-label="Tour dates">
+        <span class="m">June</span><span class="d">8</span><span class="c">&middot; Osaka</span>
+        <span class="m">June</span><span class="d">12</span><span class="c">&middot; Sapporo</span>
+        <span class="m">June</span><span class="d">15</span><span class="c">&middot; Tokyo</span>
+      </div>
     </div>
   </div>
-  <div class="container hero-bottom">
+</section>
+
+<!-- ===== STATEMENT (HERO直後・タイトル画像と被らない単独セクション) ===== -->
+<section class="statement-block">
+  <div class="container">
     <p class="hero-statement reveal r-4">
       アルバム &ldquo;Off Sync&rdquo; に記録された音楽の会話は今も続いている。<br>
       会場限定100枚のOff Syncレコードが完成しました。
