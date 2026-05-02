@@ -508,6 +508,14 @@ footer {
   .hero::before {
     background-image: url("_assets/hero-bg-mobile.jpg");
   }
+  /* Mobile: title 上寄せ + foot は title 下に配置 */
+  .hero-title {
+    align-items: flex-start;
+    padding-top: clamp(40px, 8vh, 80px);
+  }
+  .hero-foot {
+    top: 42%;
+  }
 
   .ticket-row {
     grid-template-columns: 1fr;
