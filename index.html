@@ -425,6 +425,30 @@ footer {
   color: var(--text-faint);
 }
 
+/* ===== Print: 長尺1ページPDF（Alaya Illustrator編集用）=====
+   ブラウザ標準ビューポート（1440×900）と同じレイアウトを保つため、
+   vh ベースの値を固定px化する */
+@media print {
+  @page { size: 1440px 3600px; margin: 0; }
+  body { font-size: 14px; }
+
+  /* Hero: 100vh → 標準ビューポート900px固定 */
+  .hero {
+    min-height: 900px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .hero-top { margin-top: 100px; }
+  .hero-bottom { margin-top: 120px; }
+
+  /* Sections: vh含むclamp値の代わりに固定px */
+  .entries { padding-top: 200px; padding-bottom: 140px; }
+  .entry { padding: 100px 0; }
+
+  /* Footer */
+  footer { padding-top: 140px; padding-bottom: 80px; }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   body { font-size: 14px; }
@@ -508,8 +532,7 @@ footer {
             <div class="venue-name">Blue Yard</div>
             <div class="ease">テーブル席で、ピアノと向き合う夜。気軽に、近くで。</div>
           </div>
-          <!-- TODO[v1]: BLUE YARD 予約URLに差し替え -->
-          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+          <a href="https://www.tablecheck.com/shops/blue-yard/reserve" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
         </div>
         <div class="ticket-row">
           <div class="ticket-info">
@@ -520,8 +543,7 @@ footer {
             <div class="venue-name">&ldquo;D-Bop&rdquo; Jazz Club</div>
             <div class="ease">知っているかどうかは関係ない、耳で立ち会う。</div>
           </div>
-          <!-- TODO[v1]: D-Bop 予約URLに差し替え -->
-          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+          <a href="https://www.d-bop.com/%E4%BA%88%E7%B4%84-live-ticket-reservation/" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
         </div>
         <div class="ticket-row">
           <div class="ticket-info">
@@ -532,8 +554,7 @@ footer {
             <div class="venue-name">Cotton Club</div>
             <div class="ease">フルバンドに立ち会う夜。正装は要りません。</div>
           </div>
-          <!-- TODO[v1]: COTTON CLUB 予約URLに差し替え -->
-          <a href="#" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
+          <a href="https://www.cottonclubjapan.co.jp/jp/reservation/" target="_blank" rel="noopener" class="ticket-link">Tickets</a>
         </div>
       </div>
     </article>
