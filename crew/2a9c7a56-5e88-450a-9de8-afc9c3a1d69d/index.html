@@ -140,15 +140,12 @@ section {
   width: 100%;
 }
 
-/* ===== HERO（SPEC.md: 60-70vh / 100vh占有しない） ===== */
+/* ===== HERO（LP同型: タイトル画像フル幅 + hero-foot に meta+subtitle） ===== */
 .hero {
   position: relative;
-  min-height: 64vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: clamp(20px, 4vh, 40px);
-  padding-bottom: clamp(40px, 6vh, 64px);
+  padding: 0;
   overflow: hidden;
 }
 .hero::before {
@@ -160,6 +157,7 @@ section {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  opacity: 1;
   pointer-events: none;
 }
 .hero::after {
@@ -171,19 +169,37 @@ section {
   pointer-events: none;
 }
 .hero > * { position: relative; z-index: 2; }
+
+/* Title: Alaya Off Sync, Here タイポ素材（LPと共通の `for colored` 派生）をフル幅で配置 */
 .hero-title {
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: clamp(60px, 12vw, 168px);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: var(--text);
+  position: relative;
+  z-index: 2;
   margin: 0;
+  display: block;
+  line-height: 0;
 }
+.hero-title img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Foot: Crew Log アイデンティティ + meta を画像下に配置（LPと同型） */
 .hero-foot {
+  position: relative;
+  z-index: 3;
+  padding: clamp(20px, 3vh, 32px) var(--gutter) clamp(40px, 6vh, 64px);
+  display: flex;
+  align-items: flex-start;
+}
+.hero-foot-left {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
+  align-items: flex-start;
 }
 .hero-meta {
   font-family: var(--font-en);
@@ -362,6 +378,12 @@ footer {
     background-image: url("_assets/hero-bg-mobile.jpg");
   }
 
+  .hero-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
   .hero-statement { max-width: 100%; }
 
   .entry-meta {
@@ -380,10 +402,17 @@ footer {
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <h1 class="hero-title reveal r-2">Crew&nbsp;Log</h1>
+  <h1 class="hero-title reveal r-2">
+    <picture>
+      <source type="image/webp" srcset="_assets/title.webp">
+      <img src="_assets/title.png" alt="Off Sync, Here">
+    </picture>
+  </h1>
   <div class="hero-foot">
-    <p class="hero-meta reveal r-1">Takahiro Izumikawa &middot; Japan Tour 2026</p>
-    <p class="hero-subtitle reveal r-3">Documentation from inside</p>
+    <div class="hero-foot-left">
+      <p class="hero-meta reveal r-1">Crew Log &middot; Takahiro Izumikawa Japan Tour 2026</p>
+      <p class="hero-subtitle reveal r-3">Documentation from inside</p>
+    </div>
   </div>
 </section>
 
