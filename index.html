@@ -226,6 +226,18 @@ section {
   color: var(--text-dim);
   text-align: left;
 }
+.hero-statement a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 240, 232, 0.30);
+  transition: color 0.4s ease, text-decoration-color 0.4s ease;
+}
+.hero-statement a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
 
 /* ===== ENTRIES (3-tier structure) ===== */
 .entries {
@@ -472,6 +484,22 @@ footer {
   letter-spacing: 0.28em;
   color: var(--text-faint);
 }
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-family: var(--font-en);
+  font-size: 10px;
+  letter-spacing: 0.40em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 0.4s ease;
+}
+.footer-links a:hover {
+  color: var(--accent);
+}
 
 /* ===== Print: 長尺1ページPDF（Alaya Illustrator編集用）=====
    ブラウザ標準ビューポート（1440×900）と同じレイアウトを保つため、
@@ -558,7 +586,7 @@ footer {
 <section class="statement-block">
   <div class="container">
     <p class="hero-statement reveal r-4">
-      アルバム &ldquo;Off Sync&rdquo; に記録された音楽の会話は今も続いている。<br>
+      アルバム &ldquo;<a href="https://www.takahiroizumikawa.com/off-sync-private-jp" target="_blank" rel="noopener">Off Sync</a>&rdquo; に記録された音楽の会話は今も続いている。<br>
       会場限定100枚のOff Syncレコードが完成しました。
     </p>
   </div>
@@ -648,6 +676,10 @@ footer {
     <div>
       <div class="footer-name">Takahiro Izumikawa</div>
       <div class="footer-org">Access Art Works</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.takahiroizumikawa.com/" target="_blank" rel="noopener">Website</a>
+      <a href="https://www.instagram.com/taka808/" target="_blank" rel="noopener">Instagram</a>
     </div>
     <div class="footer-meta">© 2026</div>
   </div>
