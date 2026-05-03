@@ -11,10 +11,10 @@
 
 <!-- OGPは設定しない（SPEC.md Section 7・SNSプレビュー発生回避） -->
 
-<!-- Google Fonts: Cormorant Garamond + Shippori Mincho（LPと同一） -->
+<!-- Google Fonts: Poppins + Shippori Mincho（LPと同一） -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- TODO[v1]: GA4 トラッキングID差し込み（LP親プロパティとは別の "Off Sync Crew 2026" 用ID）。
      G-XXXXXXXXXX を実IDに置換してアンコメント -->
@@ -35,12 +35,12 @@
   --text: #f5f0e8;
   --text-dim: rgba(245, 240, 232, 0.55);
   --text-faint: rgba(245, 240, 232, 0.32);
-  --accent: #c6a559;
+  --accent: #e22229;
   --rule: rgba(245, 240, 232, 0.14);
   --rule-faint: rgba(245, 240, 232, 0.07);
   --grain-opacity: 0.08;
 
-  --font-en: 'Cormorant Garamond', 'Shippori Mincho', serif;
+  --font-en: 'Poppins', 'Shippori Mincho', sans-serif;
   --font-jp: 'Shippori Mincho', 'Yu Mincho', YuMincho, '游明朝', serif;
 
   --max-width: 1080px;
@@ -142,33 +142,56 @@ section {
 
 /* ===== HERO（SPEC.md: 60-70vh / 100vh占有しない） ===== */
 .hero {
+  position: relative;
   min-height: 64vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: clamp(40px, 8vh, 80px);
-  padding-bottom: clamp(40px, 8vh, 80px);
+  padding-top: clamp(20px, 4vh, 40px);
+  padding-bottom: clamp(40px, 6vh, 64px);
+  overflow: hidden;
 }
-.hero-top {
-  margin-top: clamp(40px, 10vh, 96px);
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("_assets/hero-bg-desktop.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
 }
-.hero-meta {
-  font-family: var(--font-en);
-  font-size: 11px;
-  letter-spacing: 0.36em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 40px;
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(22,22,22,0.05) 0%, rgba(22,22,22,0.40) 60%, rgba(22,22,22,0.90) 100%);
+  pointer-events: none;
 }
+.hero > * { position: relative; z-index: 2; }
 .hero-title {
   font-family: var(--font-en);
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 500;
   font-size: clamp(60px, 12vw, 168px);
   line-height: 0.92;
   letter-spacing: -0.02em;
   color: var(--text);
-  margin-bottom: 28px;
+  margin: 0;
+}
+.hero-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hero-meta {
+  font-family: var(--font-en);
+  font-size: clamp(13px, 1.5vw, 16px);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
 }
 .hero-subtitle {
   font-family: var(--font-en);
@@ -177,18 +200,21 @@ section {
   text-transform: uppercase;
   color: var(--text-dim);
   font-weight: 400;
+  margin: 0;
 }
-.hero-bottom {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: clamp(48px, 10vh, 96px);
+/* Statement: HERO直後・タイトル画像と被らない単独セクション（LPと同一構造） */
+.statement-block {
+  padding-top: clamp(48px, 8vh, 96px);
+  padding-bottom: clamp(24px, 4vh, 48px);
 }
 .hero-statement {
-  max-width: 380px;
+  max-width: 540px;
+  margin: 0 0 0 auto;
   font-family: var(--font-jp);
   font-size: 14px;
   line-height: 2;
   color: var(--text-dim);
+  text-align: left;
 }
 
 /* ===== ENTRY STREAM ===== */
@@ -213,11 +239,10 @@ section {
 }
 .entry-number {
   font-family: var(--font-en);
-  font-style: italic;
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(20px, 2.4vw, 28px);
   letter-spacing: 0.02em;
-  color: var(--accent); /* 金は標識でなく質感として連番に散らす（SPEC.md 2.金の使い方差分） */
+  color: var(--accent);
 }
 .entry-date {
   font-family: var(--font-en);
@@ -316,9 +341,9 @@ footer {
 }
 .footer-tag {
   font-family: var(--font-en);
-  font-style: italic;
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
   color: var(--text-faint);
   margin-top: 10px;
 }
@@ -333,7 +358,10 @@ footer {
 @media (max-width: 768px) {
   body { font-size: 14px; }
 
-  .hero-bottom { justify-content: flex-start; }
+  .hero::before {
+    background-image: url("_assets/hero-bg-mobile.jpg");
+  }
+
   .hero-statement { max-width: 100%; }
 
   .entry-meta {
@@ -352,15 +380,18 @@ footer {
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="container hero-top">
+  <h1 class="hero-title reveal r-2">Crew&nbsp;Log</h1>
+  <div class="hero-foot">
     <p class="hero-meta reveal r-1">Takahiro Izumikawa &middot; Japan Tour 2026</p>
-    <h1 class="hero-title reveal r-2">Crew&nbsp;Log</h1>
     <p class="hero-subtitle reveal r-3">Documentation from inside</p>
   </div>
-  <div class="container hero-bottom">
+</section>
+
+<!-- ===== STATEMENT (HERO直後・LPと同一構造) ===== -->
+<section class="statement-block">
+  <div class="container">
     <p class="hero-statement reveal r-4">
-      クルーへ。<br>
-      ここから先は、制作の内側です。<br>
+      クルーへ。ここから先は、制作の内側です。<br>
       記録は不定期に追記されます。
     </p>
   </div>
