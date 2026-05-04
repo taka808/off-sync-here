@@ -443,10 +443,13 @@ footer {
       </div>
 
       <div class="entry-video reveal r-6">
+        <!-- Vimeo whitelist検証のため iframe のみ referrerpolicy="strict-origin" を上書き。
+             ページ全体の <meta name="referrer" content="no-referrer"> は維持し UUID 漏洩防止。
+             origin（https://offsynchere.takahiroizumikawa.com）だけVimeoに送られる。 -->
         <iframe
           src="https://player.vimeo.com/video/1188889892?h=9db994d753&dnt=1&title=0&byline=0&portrait=0"
           loading="lazy"
-          referrerpolicy="no-referrer"
+          referrerpolicy="strict-origin"
           allow="autoplay; fullscreen; picture-in-picture"
           allowfullscreen>
         </iframe>
