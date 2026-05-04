@@ -430,37 +430,26 @@ footer {
 <section class="stream">
   <div class="container">
 
-    <!-- TODO[v1]: エントリ #001 を実コンテンツに差し替え -->
     <!-- 各エントリの構造: <article class="entry" id="log-NNN">
            - .entry-meta (#NNN + 日付)
-           - .entry-title (和文タイトル)
+           - .entry-title (和文タイトル・任意)
            - .entry-video (Vimeo unlisted iframe / aspect-ratio:16/9)
-           - .entry-body (本文 200-400字)
+           - .entry-body (本文 200-400字・任意)
          新規エントリは <section class="stream"> 直下の最上段に追加する -->
     <article class="entry" id="log-001">
       <div class="entry-meta reveal r-5">
         <span class="entry-number">#001</span>
-        <span class="entry-date">— placeholder —</span>
+        <span class="entry-date">2026-05-03</span>
       </div>
-      <h2 class="entry-title reveal r-5">（プレースホルダ — エントリ#001のタイトルが入ります）</h2>
 
       <div class="entry-video reveal r-6">
-        <!-- TODO[v1]: Vimeo unlisted iframe に差し替え。例:
-             <iframe
-               src="https://player.vimeo.com/video/XXXXXXXXX?dnt=1&title=0&byline=0&portrait=0"
-               loading="lazy"
-               referrerpolicy="no-referrer"
-               allow="autoplay; fullscreen; picture-in-picture"
-               allowfullscreen>
-             </iframe>
-             ※ Vimeo側の設定: プライバシー=Unlisted / 埋め込み許可ドメイン=taka808.github.io のみ -->
-        <div class="video-placeholder">Vimeo unlisted embed (16:9)</div>
-      </div>
-
-      <div class="entry-body reveal r-6">
-        <p>
-          （プレースホルダ本文。このエントリで何を残すのか、録ったときの空気、選んだ音、捨てた音、なぜ今これを残すのかを200-400字で書く。実コンテンツが確定したらこの段落を差し替える。）
-        </p>
+        <iframe
+          src="https://player.vimeo.com/video/1188889892?h=9db994d753&dnt=1&title=0&byline=0&portrait=0"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
       </div>
     </article>
 
