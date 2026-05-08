@@ -363,16 +363,19 @@ footer {
   color: var(--text-faint);
   margin-top: 10px;
 }
+/* LP のアルバムリンク (.hero-statement a) と同型エフェクト */
 .footer-link {
   color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.4s ease, border-color 0.4s ease;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245, 240, 232, 0.30);
+  transition: color 0.4s ease, text-decoration-color 0.4s ease;
 }
 .footer-link:hover,
 .footer-link:focus-visible {
-  color: var(--text-dim);
-  border-bottom-color: var(--rule-faint);
+  color: var(--accent);
+  text-decoration-color: var(--accent);
   outline: none;
 }
 .footer-meta {
@@ -497,7 +500,7 @@ footer {
     <div>
       <div class="footer-name">Takahiro Izumikawa</div>
       <div class="footer-org">Access Art Works</div>
-      <div class="footer-tag">Crew Log · <a href="https://offsynchere.takahiroizumikawa.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Off Sync, Here</a></div>
+      <div class="footer-tag"><a href="https://offsynchere.takahiroizumikawa.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Off Sync, Here</a></div>
     </div>
     <div class="footer-meta">© 2026</div>
   </div>
