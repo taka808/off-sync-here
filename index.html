@@ -383,6 +383,19 @@ section {
   border-bottom: 1px solid var(--rule);
   letter-spacing: 0.06em;
 }
+/* Redirect 経由（?subscribed=true）の成功メッセージ — JS インターセプト失敗時のフォールバック */
+.log-success {
+  max-width: 520px;
+  margin-top: 8px;
+  padding: 18px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-jp);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.log-success p { margin: 0; }
 
 /* Tickets grid */
 .tickets-grid {
@@ -722,6 +735,20 @@ footer {
     <div class="footer-meta">© 2026</div>
   </div>
 </footer>
+
+<!-- Redirect 経由の成功メッセージ表示（?subscribed=true 検出時にフォームを置き換え） -->
+<script>
+(function(){
+  var p = new URLSearchParams(window.location.search);
+  if (p.get('subscribed') !== 'true') return;
+  var f = document.querySelector('.log-form');
+  if (!f) return;
+  var m = document.createElement('div');
+  m.className = 'log-success reveal r-1';
+  m.innerHTML = '<p>Logにようこそ。Emailで当日までの様子をお届けします。</p>';
+  f.parentNode.replaceChild(m, f);
+})();
+</script>
 
 </body>
 </html>
