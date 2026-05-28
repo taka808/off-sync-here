@@ -428,6 +428,7 @@ footer {
 .threshold-rule { width:36px; height:1px; background:var(--rule); margin:20px auto 0; }
 .threshold-hint { margin-top:26px; font-family:var(--font-en); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--text-faint); }
 .room { background:var(--bg-deeper); padding-top: clamp(20px,3vh,36px); padding-bottom: 168px; }
+.hg-feed { max-height: 65vh; min-height: 320px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 4px; }
 .hg-murmur { margin-bottom:34px; max-width:600px; }
 .hg-text { font-family:var(--font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; }
 .hg-by { font-family:var(--font-en); font-size:11px; letter-spacing:0.16em; color:var(--text-faint); margin-top:8px; }
@@ -734,6 +735,7 @@ footer {
       if(m.name){ var by=document.createElement('div'); by.className='hg-by'; by.textContent='— '+m.name; wrap.appendChild(by); }
       feedEl.appendChild(wrap);
     });
+    feedEl.scrollTop = feedEl.scrollHeight;
   }
   function notice(msg, isErr){
     affirmEl.textContent=msg;
@@ -743,7 +745,7 @@ footer {
   }
   function affirm(){ notice('独り言が記録されました。', false); }
   function autosize(){ textEl.style.height='auto'; textEl.style.height=Math.min(textEl.scrollHeight,120)+'px'; }
-  function scrollBottom(){ window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth' }); }
+  function scrollBottom(){ feedEl.scrollTop = feedEl.scrollHeight; }
   function load(){
     if(!sb) return;
     sb.from('hitorigoto').select('name,body,created_at').order('created_at',{ascending:true}).then(function(res){
