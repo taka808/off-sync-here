@@ -32,6 +32,7 @@
 :root {
   --bg: #161616;
   --bg-deeper: #0e0e0e;
+  --bg-lifted: #1c1c1c;
   --text: #f5f0e8;
   --text-dim: rgba(245, 240, 232, 0.55);
   --text-faint: rgba(245, 240, 232, 0.32);
@@ -423,12 +424,12 @@ footer {
 }
 
 /* ===== hitori-goto（Crew向け独り言／チャット）===== */
-.threshold { min-height: 50vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 18%, var(--bg-deeper) 100%); text-align:center; }
+.threshold { min-height: 50vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 18%, var(--bg-lifted) 100%); text-align:center; }
 .threshold-mark { font-family:var(--font-en); font-weight:500; font-style:normal; font-size:clamp(22px,3vw,32px); letter-spacing:0.05em; color:var(--accent); }
 .threshold-sub { margin-top:12px; font-family:var(--font-jp); font-size:13px; letter-spacing:0.10em; color:var(--text-faint); }
 .threshold-rule { width:36px; height:1px; background:var(--rule); margin:20px auto 0; }
 .threshold-hint { margin-top:26px; font-family:var(--font-en); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--text-faint); }
-.room { background:var(--bg-deeper); padding-top: clamp(20px,3vh,36px); padding-bottom: 24px; }
+.room { background:var(--bg-lifted); padding-top: clamp(20px,3vh,36px); padding-bottom: 24px; }
 .hg-feed { max-height: 65vh; min-height: 320px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 4px; }
 .hg-murmur { margin-bottom:34px; max-width:600px; }
 .hg-text { font-family:var(--font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; }
