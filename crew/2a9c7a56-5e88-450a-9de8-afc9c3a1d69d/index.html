@@ -71,6 +71,7 @@ body {
   letter-spacing: 0.04em;
   font-size: 15px;
   font-feature-settings: "palt";
+  padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); /* compose 上端 ≈ footer-inner 下端 の静的近似（JS無し＝ガクガクなし） */
 }
 
 /* ===== グレイン: SVG noise overlay（LPと同一） ===== */
@@ -330,7 +331,7 @@ section {
 footer {
   position: relative;
   z-index: 2;
-  padding: clamp(80px, 14vh, 140px) var(--gutter) clamp(40px, 8vh, 80px);
+  padding: clamp(24px, 3vh, 40px) var(--gutter) clamp(40px, 8vh, 80px);
   border-top: 1px solid var(--rule);
 }
 .footer-inner {
@@ -427,7 +428,7 @@ footer {
 .threshold-sub { margin-top:12px; font-family:var(--font-jp); font-size:13px; letter-spacing:0.10em; color:var(--text-faint); }
 .threshold-rule { width:36px; height:1px; background:var(--rule); margin:20px auto 0; }
 .threshold-hint { margin-top:26px; font-family:var(--font-en); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--text-faint); }
-.room { background:var(--bg-deeper); padding-top: clamp(20px,3vh,36px); padding-bottom: 168px; }
+.room { background:var(--bg-deeper); padding-top: clamp(20px,3vh,36px); padding-bottom: 24px; }
 .hg-feed { max-height: 65vh; min-height: 320px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 4px; }
 .hg-murmur { margin-bottom:34px; max-width:600px; }
 .hg-text { font-family:var(--font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; }
