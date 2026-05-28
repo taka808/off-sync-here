@@ -652,6 +652,33 @@ footer {
       </div>
     </article>
 
+    <article class="entry" id="log-007">
+      <div class="entry-meta fade-on-scroll">
+        <span class="entry-number">#007</span>
+        <span class="entry-date">2026-05-16</span>
+      </div>
+
+      <div class="entry-video fade-on-scroll">
+        <!-- crew 7 は取得時点で privacy.embed=public。#001/#003-005 と揃え Crew-only(whitelist) 化を推奨（HASHIRA が Vimeo dashboard で設定）。
+             whitelist 化すれば referrerpolicy="strict-origin" で origin（https://offsynchere.takahiroizumikawa.com）だけ送られ照合通過。
+             public のままでも h= ハッシュ付きで再生可。ページ全体の <meta name="referrer" content="no-referrer"> は維持し UUID 漏洩防止。 -->
+        <iframe
+          src="https://player.vimeo.com/video/1192693198?h=0c1e530445&dnt=1&title=0&byline=0&portrait=0"
+          loading="lazy"
+          referrerpolicy="strict-origin"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h2 class="entry-title fade-on-scroll">送り出した先で止まる</h2>
+
+      <div class="entry-body fade-on-scroll">
+        <p>送ったはずのレコードが、税関で止まっているという報告。</p>
+        <p>長文のメールで何度もやりとり。重くて大きな箱を日本まで届ける道を探している。間に合うかどうかは、まだ分からない。</p>
+      </div>
+    </article>
+
   </div>
 </section>
 
