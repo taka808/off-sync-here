@@ -420,7 +420,35 @@ footer {
     align-items: flex-start;
   }
 }
+
+/* ===== hitori-goto（Crew向け独り言／チャット）===== */
+.threshold { min-height: 50vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 18%, var(--bg-deeper) 100%); text-align:center; }
+.threshold-mark { font-family:var(--font-en); font-weight:500; font-style:normal; font-size:clamp(22px,3vw,32px); letter-spacing:0.05em; color:var(--accent); }
+.threshold-sub { margin-top:12px; font-family:var(--font-jp); font-size:13px; letter-spacing:0.10em; color:var(--text-faint); }
+.threshold-rule { width:36px; height:1px; background:var(--rule); margin:20px auto 0; }
+.threshold-hint { margin-top:26px; font-family:var(--font-en); font-size:10px; letter-spacing:0.30em; text-transform:uppercase; color:var(--text-faint); }
+.room { background:var(--bg-deeper); padding-top: clamp(20px,3vh,36px); padding-bottom: 168px; }
+.hg-murmur { margin-bottom:34px; max-width:600px; }
+.hg-text { font-family:var(--font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; }
+.hg-by { font-family:var(--font-en); font-size:11px; letter-spacing:0.16em; color:var(--text-faint); margin-top:8px; }
+.hg-empty { font-family:var(--font-jp); font-size:13px; color:var(--text-faint); }
+.hg-compose { position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(--bg-deeper); border-top:1px solid var(--rule); padding:14px var(--gutter) max(14px, env(safe-area-inset-bottom)); transform:translateY(120%); transition:transform .55s cubic-bezier(.16,1,.3,1); }
+.hg-compose.show { transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){ .hg-compose{ transition:none; } }
+.hg-compose-inner { max-width:var(--max-width); margin:0 auto; position:relative; }
+.hg-affirm { position:absolute; bottom:100%; left:0; right:0; padding:10px 0 14px; font-family:var(--font-jp); font-size:13px; color:var(--text-dim); background:linear-gradient(transparent, var(--bg-deeper) 60%); opacity:0; transition:opacity .8s ease; pointer-events:none; }
+.hg-affirm.show { opacity:1; }
+.hg-affirm.err { color:var(--accent); }
+.hg-input { width:100%; background:transparent; border:0; border-bottom:1px solid var(--rule); color:var(--text); font-family:var(--font-jp); font-size:15px; line-height:1.9; letter-spacing:0.04em; padding:8px 0; resize:none; outline:none; max-height:120px; }
+.hg-input::placeholder { color:var(--text-faint); }
+.hg-input:focus { border-bottom-color:var(--text-dim); }
+.hg-row { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:12px; }
+.hg-name { background:transparent; border:0; border-bottom:1px solid var(--rule-faint); color:var(--text-dim); font-family:var(--font-jp); font-size:12px; letter-spacing:0.04em; padding:4px 0; outline:none; width:150px; }
+.hg-name::placeholder { color:var(--text-faint); }
+.hg-submit { font-family:var(--font-en); font-size:12px; letter-spacing:0.20em; text-transform:uppercase; color:var(--text-dim); background:none; border:0; cursor:pointer; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px; text-decoration-color:rgba(245,240,232,0.30); transition:color .4s ease, text-decoration-color .4s ease; }
+.hg-submit:hover, .hg-submit:focus-visible { color:var(--accent); text-decoration-color:var(--accent); outline:none; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -625,6 +653,31 @@ footer {
   </div>
 </section>
 
+<!-- ===== hitori-goto（Crew向け独り言／チャット） ===== -->
+<section class="threshold">
+  <div class="threshold-mark">hitori-goto</div>
+  <div class="threshold-sub">みんなの独り言</div>
+  <div class="threshold-rule"></div>
+  <div class="threshold-hint">&darr;</div>
+</section>
+
+<section class="room">
+  <div class="container">
+    <div class="hg-feed" id="hg-feed"></div>
+  </div>
+</section>
+
+<div class="hg-compose" id="hg-compose">
+  <div class="hg-compose-inner">
+    <div class="hg-affirm" id="hg-affirm"></div>
+    <textarea class="hg-input" id="hg-text" rows="1" placeholder="独り言を書く"></textarea>
+    <div class="hg-row">
+      <input class="hg-name" id="hg-name" type="text" maxlength="20" placeholder="名前（任意）">
+      <button class="hg-submit" id="hg-submit" type="button">書く</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer-inner">
@@ -655,6 +708,69 @@ footer {
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
   els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+<script>
+// ===== hitori-goto =====
+(function () {
+  var SUPABASE_URL      = 'https://abivdafsebrjsuduhdto.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiaXZkYWZzZWJyanN1ZHVoZHRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MjM2MDksImV4cCI6MjA5NTQ5OTYwOX0.2_YLIyV7EIR5cPYoZGg1xZZlEFhQrLRaWLh0Sko8b1w';
+  var sb = (window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+  var feedEl=document.getElementById('hg-feed');
+  var textEl=document.getElementById('hg-text');
+  var nameEl=document.getElementById('hg-name');
+  var submitEl=document.getElementById('hg-submit');
+  var affirmEl=document.getElementById('hg-affirm');
+  var composeEl=document.getElementById('hg-compose');
+  var roomEl=document.querySelector('.room');
+  var affirmTimer=null;
+  function render(rows){
+    feedEl.innerHTML='';
+    if(!rows || !rows.length){ var e=document.createElement('div'); e.className='hg-empty'; e.textContent='まだ、誰の独り言もありません。'; feedEl.appendChild(e); return; }
+    rows.forEach(function(m){
+      var wrap=document.createElement('div'); wrap.className='hg-murmur';
+      var p=document.createElement('p'); p.className='hg-text'; p.textContent=m.body; wrap.appendChild(p);
+      if(m.name){ var by=document.createElement('div'); by.className='hg-by'; by.textContent='— '+m.name; wrap.appendChild(by); }
+      feedEl.appendChild(wrap);
+    });
+  }
+  function notice(msg, isErr){
+    affirmEl.textContent=msg;
+    affirmEl.className='hg-affirm show'+(isErr?' err':'');
+    if(affirmTimer)clearTimeout(affirmTimer);
+    if(!isErr) affirmTimer=setTimeout(function(){affirmEl.classList.remove('show');},4200);
+  }
+  function affirm(){ notice('独り言が記録されました。', false); }
+  function autosize(){ textEl.style.height='auto'; textEl.style.height=Math.min(textEl.scrollHeight,120)+'px'; }
+  function scrollBottom(){ window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth' }); }
+  function load(){
+    if(!sb) return;
+    sb.from('hitorigoto').select('name,body,created_at').order('created_at',{ascending:true}).then(function(res){
+      if(res.error){ notice('読み込みエラー: '+res.error.message, true); return; }
+      render(res.data||[]);
+    });
+  }
+  function submit(){
+    var body=(textEl.value||'').trim(); if(!body){textEl.focus();return;}
+    var name=(nameEl.value||'').trim();
+    if(!sb){ notice('未接続', true); return; }
+    sb.from('hitorigoto').insert({ body: body, name: name||null }).then(function(res){
+      if(res.error){ notice('送信エラー: '+res.error.message, true); return; }
+      load(); textEl.value=''; autosize(); affirm(); scrollBottom();
+    });
+  }
+  submitEl.addEventListener('click',submit);
+  textEl.addEventListener('input',autosize);
+  textEl.addEventListener('keydown',function(e){ if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();submit();} });
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){ entries.forEach(function(en){ composeEl.classList.toggle('show', en.isIntersecting); }); }, { threshold:0.01 });
+    io.observe(roomEl);
+  } else { composeEl.classList.add('show'); }
+  load();
+  if(sb){
+    try{ sb.channel('hitorigoto-rt').on('postgres_changes', { event:'INSERT', schema:'public', table:'hitorigoto' }, function(){ load(); }).subscribe(); }catch(e){}
+  }
 })();
 </script>
 
