@@ -680,6 +680,33 @@ footer {
       </div>
     </article>
 
+    <article class="entry" id="log-008">
+      <div class="entry-meta fade-on-scroll">
+        <span class="entry-number">#008</span>
+        <span class="entry-date">2026-05-25</span>
+      </div>
+
+      <div class="entry-video fade-on-scroll">
+        <!-- crew 8 は取得時点で privacy.embed=public。#001/#003-007 と揃え Crew-only(whitelist) 化を推奨（HASHIRA が Vimeo dashboard で設定）。
+             whitelist 化すれば referrerpolicy="strict-origin" で origin（https://offsynchere.takahiroizumikawa.com）だけ送られ照合通過。
+             public のままでも h= ハッシュ付きで再生可。ページ全体の <meta name="referrer" content="no-referrer"> は維持し UUID 漏洩防止。 -->
+        <iframe
+          src="https://player.vimeo.com/video/1195239071?h=515dbdda91&dnt=1&title=0&byline=0&portrait=0"
+          loading="lazy"
+          referrerpolicy="strict-origin"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h2 class="entry-title fade-on-scroll">招待状を配る</h2>
+
+      <div class="entry-body fade-on-scroll">
+        <p>サンディエゴの海から。日本のツアーへ、招待状のかたちをしたフライヤーを店々に置いてもらっている。</p>
+        <p>コンセプトのある店、図書館の片隅、本に挟むしおりとして。クルーが渡せば、それが誰かの発見につながるかもしれない。</p>
+      </div>
+    </article>
+
   </div>
 </section>
 
