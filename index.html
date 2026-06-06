@@ -753,14 +753,16 @@ footer {
 
 /* 部屋（room） */
 .pier-room { background:var(--pier-lifted); padding-top:clamp(20px,3vh,36px); padding-bottom:24px; }
-.hg-feed { }   /* 静的フロー：内部スクロールなし＝ページごとスクロール（航海日誌を上から読む / nested scroll解消） */
+.hg-feed { max-height:65vh; min-height:320px; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-right:4px; }   /* Crew方式: 一定サイズで内部スクロール（投稿が増えてもページは膨張しない・新着は自動下スクロール / 進行ログ2026-05-?? L3873） */
 .hg-murmur { margin-bottom:34px; max-width:600px; }
 .hg-text { font-family:var(--pier-font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; word-break:break-word; }
 .hg-by { font-family:var(--pier-font-en); font-size:11px; letter-spacing:0.16em; color:var(--pier-faint); margin-top:8px; }
 
 /* 下固定 compose（Crew D5 型スライド）+ soft-gate */
-/* compose は静的（流れの中）。固定にするとフッターを隠すため（Crewと同型問題の解消）。Logフォームと同じく in-flow。room と同じ bg で連続させる */
-.hg-compose { position:static; background:var(--pier-lifted); padding:8px var(--pier-gutter) clamp(48px,9vh,90px); }
+/* compose = Crew方式の下からせり上がる固定ポップアップ。room表示中のみ出し、footerが視界に入ったら隠す＝フッター被り解消 */
+.hg-compose { position:fixed; left:0; right:0; bottom:0; z-index:50; background:var(--pier-deeper); border-top:1px solid var(--pier-rule); padding:14px var(--pier-gutter) max(14px, env(safe-area-inset-bottom)); transform:translateY(120%); transition:transform .55s cubic-bezier(.16,1,.3,1); }
+.hg-compose.show { transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){ .hg-compose{ transition:none; } }
 .hg-compose-inner { max-width:var(--pier-max); margin:0 auto; position:relative; }
 .hg-affirm { position:absolute; bottom:100%; left:0; right:0; padding:10px 0 14px; font-family:var(--pier-font-jp); font-size:13px; color:var(--pier-dim); background:linear-gradient(transparent, var(--pier-deeper) 60%); opacity:0; transition:opacity .8s ease; pointer-events:none; }
 .hg-affirm.show { opacity:1; }
@@ -972,7 +974,15 @@ footer {
   textEl.addEventListener('input', autosize);
   textEl.addEventListener('keydown', function(e){ if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
 
-  // compose は静的フロー＝常時表示（固定compose+IntersectionObserver .show は廃止。フッター被り解消・Logフォームと同じ in-flow）。
+  // compose = 下からせり上がる固定ポップアップ（Crew方式）。room表示中のみ出し、footerが視界に入ったら隠す＝フッター被り解消。
+  var footerEl = document.querySelector('footer');
+  var roomInView = false, footerInView = false;
+  function syncCompose(){ composeEl.classList.toggle('show', roomInView && !footerInView); }
+  if ('IntersectionObserver' in window) {
+    if (roomEl)   new IntersectionObserver(function(es){ es.forEach(function(e){ roomInView   = e.isIntersecting; }); syncCompose(); }, { threshold: 0.01 }).observe(roomEl);
+    if (footerEl) new IntersectionObserver(function(es){ es.forEach(function(e){ footerInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0, rootMargin: '0px 0px 90px 0px' }).observe(footerEl);
+    else { roomInView = true; syncCompose(); }
+  } else { composeEl.classList.add('show'); }
 
   applyGate();
   watchLogSuccess();   // The Log登録成功を監視して soft-gate を解放（blocker対策）
