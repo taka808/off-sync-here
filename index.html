@@ -974,30 +974,18 @@ footer {
   textEl.addEventListener('input', autosize);
   textEl.addEventListener('keydown', function(e){ if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
 
-  // compose = 下からせり上がる固定ポップアップ（Crew方式）。room表示中のみ出し、footerが視界に入ったら隠す＝フッター被り解消。
-  // ※重要: このscriptはDOM上でfooterより前に実行されるため、footer参照は必ずDOMContentLoaded後に行う
-  //   （同期実行だと document.querySelector('footer')=null で監視が設定されず、composeがfooterを隠し続ける）。
-  var roomInView = false, nearBottom = false;
-  function syncCompose(){ composeEl.classList.toggle('show', roomInView && !nearBottom); }
-  function setupComposeObservers(){
-    if (!('IntersectionObserver' in window)) { composeEl.classList.add('show'); return; }
-    var footerEl = document.querySelector('footer');
-    // ページ最下部（footer露出ゾーン）に近づいたら compose を隠す＝フッター被り解消。
-    // compose高さ+footer高さ分手前で隠すので、footerは常にクリアな空間に現れる。
-    function checkBottom(){
-      var fromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
-      var footerH = footerEl ? footerEl.offsetHeight : 120;
-      var composeH = composeEl.offsetHeight || 160;
-      var nb = fromBottom <= (footerH + composeH + 24);
-      if (nb !== nearBottom) { nearBottom = nb; syncCompose(); }
-    }
-    if (roomEl) new IntersectionObserver(function(es){ es.forEach(function(e){ roomInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0.01 }).observe(roomEl);
-    window.addEventListener('scroll', function(){ window.requestAnimationFrame(checkBottom); }, { passive: true });
-    window.addEventListener('resize', checkBottom);
-    checkBottom();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupComposeObservers);
-  else setupComposeObservers();
+  // ===== Crew方式（hitori-goto と全く同じ）=====
+  // room（部屋）が見えている間だけ compose をせり上げる。footer検出はしない。
+  // フッター被りは body の padding-bottom に compose の高さ分を確保して回避する
+  //   （＝footerは常に compose の上に出る。Crew index.html L75 の padding-bottom と同じ思想）。
+  function reserveSpace(){ try { document.body.style.paddingBottom = ((composeEl.offsetHeight || 170) + 8) + 'px'; } catch(e){} }
+  if ('IntersectionObserver' in window && roomEl) {
+    new IntersectionObserver(function(es){ es.forEach(function(e){ composeEl.classList.toggle('show', e.isIntersecting); }); }, { threshold: 0.01 }).observe(roomEl);
+  } else { composeEl.classList.add('show'); }
+  reserveSpace();
+  if (window.requestAnimationFrame) requestAnimationFrame(reserveSpace);
+  window.addEventListener('load', reserveSpace);
+  window.addEventListener('resize', reserveSpace);
 
   applyGate();
   watchLogSuccess();   // The Log登録成功を監視して soft-gate を解放（blocker対策）
