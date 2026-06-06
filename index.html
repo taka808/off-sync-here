@@ -753,15 +753,14 @@ footer {
 
 /* 部屋（room） */
 .pier-room { background:var(--pier-lifted); padding-top:clamp(20px,3vh,36px); padding-bottom:24px; }
-.hg-feed { max-height:65vh; min-height:320px; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-right:4px; }
+.hg-feed { }   /* 静的フロー：内部スクロールなし＝ページごとスクロール（航海日誌を上から読む / nested scroll解消） */
 .hg-murmur { margin-bottom:34px; max-width:600px; }
 .hg-text { font-family:var(--pier-font-jp); font-size:15px; line-height:1.95; letter-spacing:0.04em; color:rgba(245,240,232,0.85); white-space:pre-wrap; word-break:break-word; }
 .hg-by { font-family:var(--pier-font-en); font-size:11px; letter-spacing:0.16em; color:var(--pier-faint); margin-top:8px; }
 
 /* 下固定 compose（Crew D5 型スライド）+ soft-gate */
-.hg-compose { position:fixed; left:0; right:0; bottom:0; z-index:50; background:var(--pier-deeper); border-top:1px solid var(--pier-rule); padding:14px var(--pier-gutter) max(14px, env(safe-area-inset-bottom)); transform:translateY(120%); transition:transform .55s cubic-bezier(.16,1,.3,1); }
-.hg-compose.show { transform:translateY(0); }
-@media (prefers-reduced-motion: reduce){ .hg-compose{ transition:none; } }
+/* compose は静的（流れの中）。固定にするとフッターを隠すため（Crewと同型問題の解消）。Logフォームと同じく in-flow。room と同じ bg で連続させる */
+.hg-compose { position:static; background:var(--pier-lifted); padding:8px var(--pier-gutter) clamp(48px,9vh,90px); }
 .hg-compose-inner { max-width:var(--pier-max); margin:0 auto; position:relative; }
 .hg-affirm { position:absolute; bottom:100%; left:0; right:0; padding:10px 0 14px; font-family:var(--pier-font-jp); font-size:13px; color:var(--pier-dim); background:linear-gradient(transparent, var(--pier-deeper) 60%); opacity:0; transition:opacity .8s ease; pointer-events:none; }
 .hg-affirm.show { opacity:1; }
@@ -915,7 +914,7 @@ footer {
      （リダイレクト運用に切替えた場合）は isUnlocked() が拾う。
      ⚠️ 本番ローンチ前に必ず実機スモーク（テストemail登録→composeが解放されるか）。
         不発なら Kitフォームを redirect_url=本番URL+?subscribed=true に切替（桟橋_SPEC §4-3）。 */
-  function unlock(){ try { localStorage.setItem(GATE_KEY, '1'); } catch(e){} applyGate(); notice('Log を受け取りました。港に、一言を残せます。', false); }
+  function unlock(){ try { localStorage.setItem(GATE_KEY, '1'); } catch(e){} applyGate(); notice('Log を受け取りました。独り言を残せます。', false); }
   function logSuccessSeen(){
     if (document.querySelector('.log-success')) return true;                     // ?subscribed=true 経路（index.html L747-750が生成）
     var fs = document.querySelector('.formkit-alert-success');
@@ -947,7 +946,7 @@ footer {
     if (body.length > 500) { notice('長すぎます（500字まで）。', true); return; }
     var last = 0; try { last = parseInt(localStorage.getItem(LAST_KEY) || '0', 10); } catch(e){}
     if (Date.now() - last < COOLDOWN_MS) { notice('少し、間をおいて。', true); return; }
-    if (looksLikeNG(body)) { notice('この港には、宣伝やリンクは置けません。', true); return; }
+    if (looksLikeNG(body)) { notice('ここには、宣伝やリンクは置けません。', true); return; }
     if (!sb) { notice('いま接続できませんでした。少し時間をおいて。', true); return; }
     var name = (nameEl.value || '').trim().slice(0, 20);
     submitEl.disabled = true;
@@ -973,12 +972,7 @@ footer {
   textEl.addEventListener('input', autosize);
   textEl.addEventListener('keydown', function(e){ if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
 
-  // compose は "部屋の中だけ" せり上がる（Crew D8 型スライド）
-  if ('IntersectionObserver' in window && roomEl) {
-    // rootMargin下端-40%: footer接近前にcomposeをhideし、固定composeがfooterに被る帯を防ぐ（S9 Layer1）
-    var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ composeEl.classList.toggle('show', en.isIntersecting); }); }, { threshold: 0.01, rootMargin: '0px 0px -40% 0px' });
-    io.observe(roomEl);
-  } else { composeEl.classList.add('show'); }
+  // compose は静的フロー＝常時表示（固定compose+IntersectionObserver .show は廃止。フッター被り解消・Logフォームと同じ in-flow）。
 
   applyGate();
   watchLogSuccess();   // The Log登録成功を監視して soft-gate を解放（blocker対策）
