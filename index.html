@@ -977,14 +977,24 @@ footer {
   // compose = 下からせり上がる固定ポップアップ（Crew方式）。room表示中のみ出し、footerが視界に入ったら隠す＝フッター被り解消。
   // ※重要: このscriptはDOM上でfooterより前に実行されるため、footer参照は必ずDOMContentLoaded後に行う
   //   （同期実行だと document.querySelector('footer')=null で監視が設定されず、composeがfooterを隠し続ける）。
-  var roomInView = false, footerInView = false;
-  function syncCompose(){ composeEl.classList.toggle('show', roomInView && !footerInView); }
+  var roomInView = false, nearBottom = false;
+  function syncCompose(){ composeEl.classList.toggle('show', roomInView && !nearBottom); }
   function setupComposeObservers(){
     if (!('IntersectionObserver' in window)) { composeEl.classList.add('show'); return; }
     var footerEl = document.querySelector('footer');
-    if (roomEl)   new IntersectionObserver(function(es){ es.forEach(function(e){ roomInView   = e.isIntersecting; }); syncCompose(); }, { threshold: 0.01 }).observe(roomEl);
-    if (footerEl) new IntersectionObserver(function(es){ es.forEach(function(e){ footerInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0, rootMargin: '0px 0px 140px 0px' }).observe(footerEl);
-    else if (!roomEl) { composeEl.classList.add('show'); }
+    // ページ最下部（footer露出ゾーン）に近づいたら compose を隠す＝フッター被り解消。
+    // compose高さ+footer高さ分手前で隠すので、footerは常にクリアな空間に現れる。
+    function checkBottom(){
+      var fromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+      var footerH = footerEl ? footerEl.offsetHeight : 120;
+      var composeH = composeEl.offsetHeight || 160;
+      var nb = fromBottom <= (footerH + composeH + 24);
+      if (nb !== nearBottom) { nearBottom = nb; syncCompose(); }
+    }
+    if (roomEl) new IntersectionObserver(function(es){ es.forEach(function(e){ roomInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0.01 }).observe(roomEl);
+    window.addEventListener('scroll', function(){ window.requestAnimationFrame(checkBottom); }, { passive: true });
+    window.addEventListener('resize', checkBottom);
+    checkBottom();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupComposeObservers);
   else setupComposeObservers();
