@@ -975,14 +975,19 @@ footer {
   textEl.addEventListener('keydown', function(e){ if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
 
   // compose = 下からせり上がる固定ポップアップ（Crew方式）。room表示中のみ出し、footerが視界に入ったら隠す＝フッター被り解消。
-  var footerEl = document.querySelector('footer');
+  // ※重要: このscriptはDOM上でfooterより前に実行されるため、footer参照は必ずDOMContentLoaded後に行う
+  //   （同期実行だと document.querySelector('footer')=null で監視が設定されず、composeがfooterを隠し続ける）。
   var roomInView = false, footerInView = false;
   function syncCompose(){ composeEl.classList.toggle('show', roomInView && !footerInView); }
-  if ('IntersectionObserver' in window) {
+  function setupComposeObservers(){
+    if (!('IntersectionObserver' in window)) { composeEl.classList.add('show'); return; }
+    var footerEl = document.querySelector('footer');
     if (roomEl)   new IntersectionObserver(function(es){ es.forEach(function(e){ roomInView   = e.isIntersecting; }); syncCompose(); }, { threshold: 0.01 }).observe(roomEl);
-    if (footerEl) new IntersectionObserver(function(es){ es.forEach(function(e){ footerInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0, rootMargin: '0px 0px 90px 0px' }).observe(footerEl);
-    else { roomInView = true; syncCompose(); }
-  } else { composeEl.classList.add('show'); }
+    if (footerEl) new IntersectionObserver(function(es){ es.forEach(function(e){ footerInView = e.isIntersecting; }); syncCompose(); }, { threshold: 0, rootMargin: '0px 0px 140px 0px' }).observe(footerEl);
+    else if (!roomEl) { composeEl.classList.add('show'); }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupComposeObservers);
+  else setupComposeObservers();
 
   applyGate();
   watchLogSuccess();   // The Log登録成功を監視して soft-gate を解放（blocker対策）
